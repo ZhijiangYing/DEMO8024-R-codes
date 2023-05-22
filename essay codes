@@ -1,0 +1,86 @@
+FinlandASFR<-read.table("FinlandASFR.txt", header = TRUE, fill = TRUE, skip =2)
+
+FinlandASFR$Age <- as.character(FinlandASFR$Age)
+FinlandASFR$Age[FinlandASFR$Age=="12-"] <- "12" 
+FinlandASFR$Age[FinlandASFR$Age=="55+"] <- "55"
+FinlandASFR$Age <- as.numeric(FinlandASFR$Age)
+FinlandASFR$Year <- as.numeric(FinlandASFR$Year)
+
+FinlandTFR<-read.table("FinlandTFR.txt", header = TRUE, fill = TRUE, skip =2)
+FinlandTFR$Year <- as.numeric(FinlandTFR$Year)
+
+FranceASFR<-read.table("FranceASFR.txt", header = TRUE, fill = TRUE, skip =2)
+
+FranceASFR$Age <- as.character(FranceASFR$Age)
+FranceASFR$Age[FranceASFR$Age=="12-"] <- "12" 
+FranceASFR$Age[FranceASFR$Age=="55+"] <- "55"
+FranceASFR$Age <- as.numeric(FranceASFR$Age)
+FranceASFR$Year <- as.numeric(FranceASFR$Year)
+
+FranceTFR<-read.table("FranceTFR.txt", header = TRUE, fill = TRUE, skip =2)
+FranceTFR$Year <- as.numeric(FranceTFR$Year)
+
+GermanyASFR<-read.table("GermanyASFR.txt", header = TRUE, fill = TRUE, skip =2)
+
+GermanyASFR$Age <- as.character(GermanyASFR$Age)
+GermanyASFR$Age[GermanyASFR$Age=="12-"] <- "12" 
+GermanyASFR$Age[GermanyASFR$Age=="55+"] <- "55"
+GermanyASFR$Age <- as.numeric(GermanyASFR$Age)
+GermanyASFR$Year <- as.numeric(GermanyASFR$Year)
+
+GermanyTFR<-read.table("GermanyTFR.txt", header = TRUE, fill = TRUE, skip =2)
+GermanyTFR$Year <- as.numeric(GermanyTFR$Year)
+
+USAASFR<-read.table("USAASFR.txt", header = TRUE, fill = TRUE, skip =2)
+
+USAASFR$Age <- as.character(USAASFR$Age)
+USAASFR$Age[USAASFR$Age=="12-"] <- "12" 
+USAASFR$Age[USAASFR$Age=="55+"] <- "55"
+USAASFR$Age <- as.numeric(USAASFR$Age)
+USAASFR$Year <- as.numeric(USAASFR$Year)
+
+USATFR<-read.table("USATFR.txt", header = TRUE, fill = TRUE, skip =2)
+USATFR$Year <- as.numeric(USATFR$Year)
+
+library(ggplot2)
+
+ggplot(data = USAASFR)+
+  geom_raster(aes(x=Year,y=Age,fill=ASFR),interpolate = T)+
+  scale_fill_gradientn(colors=c("navy","blue","skyblue",
+                                "yellow","gold",
+                                "orange","red"))+
+  labs(title = "Lexis Surface for ASFR, USA 1956-2021")
+
+ggplot(data = FinlandASFR)+
+  geom_raster(aes(x=Year,y=Age,fill=ASFR),interpolate = T)+
+  scale_fill_gradientn(colors=c("navy","blue","skyblue",
+                                "yellow","gold",
+                                "orange","red"))+
+  labs(title = "Lexis Surface for ASFR, Finland 1956-2021")
+
+ggplot(data = FranceASFR)+
+  geom_raster(aes(x=Year,y=Age,fill=ASFR),interpolate = T)+
+  scale_fill_gradientn(colors=c("navy","blue","skyblue",
+                                "yellow","gold",
+                                "orange","red"))+
+  labs(title = "Lexis Surface for ASFR, France 1956-2020")
+
+
+ggplot(data = GermanyASFR)+
+  geom_raster(aes(x=Year,y=Age,fill=ASFR),interpolate = T)+
+  scale_fill_gradientn(colors=c("navy","blue","skyblue",
+                                "yellow","gold",
+                                "orange","red"))+
+  labs(title = "Lexis Surface for ASFR, Germany 1956-2017")
+
+
+ggplot()+
+geom_line(FinlandTFR,
+          mapping = aes(x=Year,y=TFR,color="FinlandTFR"))+
+geom_line(FranceTFR,
+          mapping = aes(x=Year,y=TFR,color="FranceTFR"))+
+geom_line(GermanyTFR,
+          mapping = aes(x=Year,y=TFR,color="GermanyTFR"))+
+geom_line(USATFR,
+          mapping = aes(x=Year,y=TFR,color="USATFR"))+
+  labs(x = "Year",y="TFR")
